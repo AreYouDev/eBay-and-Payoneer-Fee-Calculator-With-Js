@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>eBay and Payoneer Fee Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>eBay and Payoneer Fee Calculator</h2>
+
+        <div class="form-group">
+            <label for="salePrice">Sale Price ($):</label>
+            <input type="number" id="salePrice" name="salePrice" value="100" class="form-control" oninput="calculateFees()">
+        </div>
+
+        <p id="result" class="font-weight-bold"></p>
+    </div>
+
+    <!-- Bootstrap and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function calculateFees() {
+            var salePrice = document.getElementById('salePrice').value;
+            var ebayFeePercentage = 15;
+            var payoneerFeePercentage = 1;
+
+            var ebayFee = (ebayFeePercentage / 100) * salePrice;
+            var payoneerFee = (payoneerFeePercentage / 100) * salePrice;
+
+            var netAmount = salePrice - ebayFee - payoneerFee;
+
+            document.getElementById('result').innerHTML = 'Net Amount: $' + netAmount.toFixed(2);
+        }
+
+        // Initial calculation on page load
+        calculateFees();
+    </script>
+</body>
+</html>
