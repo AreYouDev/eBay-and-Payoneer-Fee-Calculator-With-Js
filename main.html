@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>eBay and Payoneer Fee Calculator</title>
+    <title>eBay ve Payoneer Kar, Ücret ve Toplam Kesinti Hesaplayıcı</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-4">
-        <h2>eBay and Payoneer Fee Calculator</h2>
+        <h2>eBay ve Payoneer Kar, Ücret ve Toplam Kesinti Hesaplayıcı</h2>
 
         <div class="form-group">
-            <label for="salePrice">Sale Price ($):</label>
-            <input type="number" id="salePrice" name="salePrice" value="100" class="form-control" oninput="calculateFees()">
+            <label for="purchasePrice">Alış Fiyatı ($):</label>
+            <input type="number" id="purchasePrice" name="purchasePrice" class="form-control" oninput="calculateProfitFeesAndTotalDeduction()">
         </div>
 
-        <p id="result" class="font-weight-bold"></p>
+        <div class="form-group">
+            <label for="salePrice">Satış Fiyatı ($):</label>
+            <input type="number" id="salePrice" name="salePrice" class="form-control" oninput="calculateProfitFeesAndTotalDeduction()">
+        </div>
+
+        <div id="feesProfitAndDeduction" class="font-weight-bold"></div>
     </div>
 
     <!-- Bootstrap and jQuery -->
@@ -23,21 +28,27 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        function calculateFees() {
-            var salePrice = document.getElementById('salePrice').value;
+        function calculateProfitFeesAndTotalDeduction() {
+            var purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
+            var salePrice = parseFloat(document.getElementById('salePrice').value);
             var ebayFeePercentage = 15;
             var payoneerFeePercentage = 1;
 
             var ebayFee = (ebayFeePercentage / 100) * salePrice;
             var payoneerFee = (payoneerFeePercentage / 100) * salePrice;
+            var totalDeduction = ebayFee + payoneerFee;
 
-            var netAmount = salePrice - ebayFee - payoneerFee;
+            var netProfit = salePrice - totalDeduction - purchasePrice;
 
-            document.getElementById('result').innerHTML = 'Net Amount: $' + netAmount.toFixed(2);
+            document.getElementById('feesProfitAndDeduction').innerHTML = 
+                'eBay Ücreti: $' + ebayFee.toFixed(2) + '<br>' +
+                'Payoneer Ücreti: $' + payoneerFee.toFixed(2) + '<br>' +
+                'Toplam Kesinti: $' + totalDeduction.toFixed(2) + '<br>' +
+                'Net Kar: $' + netProfit.toFixed(2);
         }
 
         // Initial calculation on page load
-        calculateFees();
+        calculateProfitFeesAndTotalDeduction();
     </script>
 </body>
 </html>
